@@ -28,7 +28,7 @@ export class AuthService {
 
   logout(){
     this.afAuth.auth.signOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   get appUser$():Observable<AppUser>{
