@@ -13,44 +13,64 @@
 </p>
 
 
-<!-- 
-  <data-table
-  [items]="items"
-  [itemCount]="itemCount"
-  (reload)="reloadItems($event)"
->
-  <data-table-column
-    [property]="'title'"
-    [header]="'Title'"
-    [sortable]="true"
-    [resizable]="true"
-  >
-  </data-table-column>
+<!-- <data-table [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)">
 
-  <data-table-column
-    [property]="'price'"
-    [header]="'Price'"
-    [sortable]="true"
-    [resizable]="true"
-  >
-    <ng-template #dataTableCell let-item="product">
-      {{ product.data.price | currency:'USD':true }}
+  <data-table-column [property]="'title'" [header]="'Title'" [sortable]="true" [resizable]="true">
+  <data-table-column [property]="'price'" [header]="'Price'" [sortable]="true" [resizable]="true">
+    <ng-template #dataTabelCell let-item="product">
+      {{ product.price | currency:'USD':true }}
     </ng-template>
-  </data-table-column>
 
-  <data-table-column
-    [property]="'product.key'"
-    [header]="'Title'"
-    [sortable]="true"
-    [resizable]="true"
-  >
-    <ng-template #dataTableCell let-item="product">
-      {{ product.data.price | currency:'USD':true }}
-    </ng-template>
   </data-table-column>
-</data-table>
+  <data-table-column [property]="'$key'">
+      <ng-template #dataTabelCell let-item="product">
+          <a [routerLink]="['/admin/products/', p.key]">Edit</a>
+      </ng-template>
+  
+    </data-table-column>
+
+</data-table> 
 -->
-<table class="table">
+
+<!-- <table class="table table-striped"
+  [mfData]="data"
+  #mf="mfDataTable" 
+  [mfRowsOnPage]="5"
+  [mfSortBy]="sortBy"
+  >
+    <thead>
+    <tr>
+        <th style="width: 5%"></th>
+        <th style="width: 40%">
+            <mfDefaultSorter by="title">Title</mfDefaultSorter>
+        </th>
+        <th style="width: 40%">
+            <mfDefaultSorter by="price">Price</mfDefaultSorter>
+        </th>
+        <th style="width: 15%"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of mf.data">
+        <td></td>
+        <td>{{item.data.title}}</td>
+        <td>{{item.data.price}}</td>
+        <td>
+            <a [routerLink]="['/admin/products/', p.key]">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+        </td>
+    </tr>
+    </tfoot>
+</table> -->
+
+
+  <table class="table">
   <thead>
     <tr>
       <td>Title</td>
@@ -60,11 +80,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let p of filteredProducts">
-      <td>{{ p.data.title }}</td>
-      <td>{{ p.data.price }}</td>
+      <td>{{ p.title }}</td>
+      <td>{{ p.price }}</td>
       <td>
         <a [routerLink]="['/admin/products/', p.key]">Edit</a>
       </td>
     </tr>
   </tbody>
-</table>
+</table> 
