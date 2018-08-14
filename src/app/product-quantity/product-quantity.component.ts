@@ -3,14 +3,13 @@ import { Product } from '../models/product';
 import { ShoppingCartService } from '../shopping-cart.service';
 
 @Component({
-  selector: 'product-card',
-  templateUrl: './product-card.component.html',
-  styleUrls: ['./product-card.component.css']
+  selector: 'product-quantity',
+  templateUrl: './product-quantity.component.html',
+  styleUrls: ['./product-quantity.component.css']
 })
-export class ProductCardComponent {
+export class ProductQuantityComponent {
 
   @Input('product') product: Product;
-  @Input('show-actions') showActions = true;
   @Input('shopping-cart') shoppingCart;
 
   constructor(private cartService: ShoppingCartService) {
@@ -20,15 +19,16 @@ export class ProductCardComponent {
      this.cartService.addToCart(this.product);
    }
 
-  /*?removeFromCart(){
+   removeFromCart(){
      this.cartService.removeFromCart(this.product);
    }
-  */
+
    getQuantity(){
      if(!this.shoppingCart) return 0;     
 
      let item = this.shoppingCart.items[this.product.key];
      return item ? item.quantity as any : 0;
    }
+
 
 }
