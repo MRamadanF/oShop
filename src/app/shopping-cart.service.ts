@@ -3,7 +3,6 @@ import { AngularFireDatabase, AngularFireAction, DatabaseSnapshot, AngularFireOb
 import { Product } from './models/product';
 import { take } from '../../node_modules/rxjs/operators';
 import { ShoppingCart } from './models/shopping-cart';
-import { Observable } from '../../node_modules/rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +41,10 @@ export class ShoppingCartService {
     let cartId = await this.getOrCreateCartId();
     let item$ = this.getItem(cartId, product.key);
     item$.snapshotChanges().pipe(take(1)).subscribe(item => {
-      if(item.payload.exists()) item$.update({ quantity: (item.payload.val() as any).quantity + 1 });
-      else item$.set({ product: product, quantity: 1 });
+      if(item.payload.exists())
+        item$.update({ quantity: (item.payload.val() as any).quantity + 1 });
+      else 
+        item$.set({ product: product, quantity: 1 });
     });
   }
 
@@ -51,7 +52,10 @@ export class ShoppingCartService {
     let cartId = await this.getOrCreateCartId();
     let item$ = this.getItem(cartId, product.key);
     item$.snapshotChanges().pipe(take(1)).subscribe(item => {
-      item$.update({ quantity: (item.payload.val() as any).quantity - 1 });
+      if((item.payload.val() as any).quantity === 1)
+        item$.remove();
+      else
+        item$.update({ quantity: (item.payload.val() as any).quantity - 1});
     });
   }
 

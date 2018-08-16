@@ -12,24 +12,32 @@ export class ShoppingCartsComponent implements OnInit, OnDestroy {
   shoppingCartItemCount: number;
   subscription: Subscription;
   productIds;
-  items;
   totalPrice;
+  cart: any;
+  cartItems;
 
   constructor(private shoppingCartService: ShoppingCartService) { }
 
   async ngOnInit(){
-    
+        
     let cart$ = (await this.shoppingCartService.getCart()).snapshotChanges();
+    
+    
     this.subscription = cart$.subscribe(cart => {
       this.shoppingCartItemCount = 0;
       this.totalPrice = 0;
-      for (let productId in cart.payload.val().items){
-        this.shoppingCartItemCount += cart.payload.val().items[productId].quantity;
-        this.totalPrice += (cart.payload.val().items[productId].product.price * cart.payload.val().items[productId].quantity);
+      this.cart = cart.payload.val();
+      if(this.cart){
+        this.cartItems = this.cart.items;
+        this.productIds = Object.keys(this.cartItems);
+        
+        for (let productId in this.productIds){
+          this.shoppingCartItemCount += this.cartItems[this.productIds[productId]].quantity;
+          this.totalPrice += (this.cartItems[this.productIds[productId]].product.price * this.cartItems[this.productIds[productId]].quantity);
+        }
       }
-
-      this.items = cart.payload.val().items;
-      this.productIds = Object.keys(this.items);
+      
+      
     });
   }
 

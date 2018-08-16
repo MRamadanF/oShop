@@ -13,21 +13,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let productId of productIds">
-        <td>
-          <div [style.backgroundImage]="'url(' + items[productId].product.imageUrl + ')'" class="thumbnail" ></div>
-        </td>
-        <td>
-          {{ items[productId].product.title }}
-        </td>
-        <td>
-          <product-quantity [product]="items[productId].product" [shopping-cart]="items">
-          </product-quantity>
-        </td>
-        <td class="text-right">
-          {{ items[productId].quantity * items[productId].product.price | currency:'USD':true }}
-        </td>
-      </tr>
+      <ng-container *ngIf="shoppingCartItemCount > 0">
+          <tr *ngFor="let productId of productIds">
+              <td>
+                <div [style.backgroundImage]="'url(' + cartItems[productId].product.imageUrl + ')'" class="thumbnail" ></div>
+              </td>
+              <td>
+                {{ cartItems[productId].product.title }}
+              </td>
+              <td class="text-center" style="width: 230px">
+                <product-quantity [product]="cartItems[productId].product" [shopping-cart]="cart">
+                </product-quantity>
+              </td>
+              <td class="text-right">
+                {{ cartItems[productId].quantity * cartItems[productId].product.price | currency:'USD':true }}
+              </td>
+            </tr>
+      </ng-container>
     </tbody>
     <tfoot>
       <tr>

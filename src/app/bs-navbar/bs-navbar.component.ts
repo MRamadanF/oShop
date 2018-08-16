@@ -30,11 +30,12 @@ export class BsNavbarComponent implements OnInit {
     
     let cart$ = (await this.shoppingCartService.getCart()).snapshotChanges();
     cart$.subscribe(cart => {
-
       this.shoppingCartItemCount = 0;
-      for (let productId in cart.payload.val().items)
-        this.shoppingCartItemCount += cart.payload.val().items[productId].quantity;
-
+      
+      if(cart.payload.val()){
+        for (let productId in cart.payload.val().items)
+          this.shoppingCartItemCount += cart.payload.val().items[productId].quantity;
+      }
     });
   }
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { map } from '../../node_modules/rxjs/operators';
-import { query } from '../../node_modules/@angular/core/src/render3/query';
 
 @Injectable({
   providedIn: 'root'

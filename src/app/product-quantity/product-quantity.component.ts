@@ -24,6 +24,7 @@ export class ProductQuantityComponent {
    }
 
    getQuantity(){
+
      if(!this.shoppingCart) return 0;     
 
      let item = this.shoppingCart.items[this.product.key];
